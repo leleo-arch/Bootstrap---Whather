@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <style>
+    * {
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    #navs {
+      height: 70px;
+    }
+
+    #imagem {
+      margin-left: 50px;
+      width: 50px;
+      height: 90px;
+    }
+
+    #imagem-1 {
+      width: 190px;
+      height: 140px;
+      margin-left: 40px;
+    }
+
+    #txt-5 {
+      margin-left: 320px;
+      margin-top: 70px;
+      font-weight: 20px;
+    }
+
+    #txt-6 {
+      margin-left: 330px;
+      margin-top: 50px;
+      font-weight: 20px;
+    }
+
+    #div-4 {
+      border-radius: 10px 0px 20px 20px;
+
+    }
+
+    #div-3 {
+ border-radius: 20px 20px 0px 0px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #div-3s {
+      gap: 50px;
+    }
+
+    #div-4s {
+      gap: 100px;
+      margin-right: 40px;
+
+    }
+
+    #div-5 {
+      margin-top: 270px;
+      gap: 10px;
+      border-radius: 20px;
+    }
+
+    #div-6 {
+      margin-top: 100px;
+      gap: 40px;
+    }
+
+    #div-7 {
+      border-radius: 30px;
+    }
+
+    #div-2 {
+      margin-top: 120px;
+    }
+
+    #imagem3 {
+     width: 105px;
+     height:80px;
+      margin-top: 25px;
+      margin-right: 200px;
+      margin-bottom: 20px;
+      box-shadow: 10px;
+    }
+
+    #imagem2 {
+      width: 80px;
+      margin-bottom: 20px;
+
+      height: 80px;
+      margin-top: 25px;
+      margin-left: 10px;
+    }
+
+    #foooter {
+      margin-top: 0;
+      color: white;
+    }
+
+    #btn {
+      width: 70%;
+      margin-left: 70px;
+      box-shadow: 2px 3px 5px rgb(94, 93, 93);
+      margin-top: 40px;
+      margin-bottom: 30px;
+    }
+  </style>
+
+  <script>
+    async function getAddressByCep() {
+      const cep = document.getElementById('cep').value;
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+        console.log(data);
+        document.getElementById('rua').innerText = data.logradouro;
+        document.getElementById('bairro').innerText = data.bairro;
+        document.getElementById('cidade').innerText = data.localidade;
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    async function getWeatherForecast() {
+      const lat = document.getElementById('lat').value;
+      const long = document.getElementById('long').value;
+      try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m`);
+        const data = await response.json();
+        let forecastHTML = '';
+        data.hourly.time.forEach((temperature_2m, index) => {
+          forecastHTML += `
+          <div>
+            <div>Previsão do tempo: 
+            ${temperature_2m} - ${data.hourly.temperature_2m[index]} °C
+            <div>
+          </div>`;
+        });
+
+        document.getElementById('forecast').innerHTML = forecastHTML;
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-body-secondary w-auto p-3">
+  <nav id="navs" class="d-flex p-3 mb-3 bg-primary text-white">
+    <div class="p-1 flex-grow-1">
+      <h3 class="fw-bold">DncWeather</h3>
+    </div>
+    <div class="p-3">
+      <h6 class="fw-bold">Endereço</h6>
+    </div>
+    <div class=" p-3">
+        <h6 class="fw-bold">Previsão do Tempo</h6>
+    </div>
+  </nav>
+
+  <div class=" d-flex justify-content-center">
+          <div class="col-md-5 mt-5 ">
+            <h2 class="p-6 fw-bold"">Descubra Mais com Precisão: Previsões do Tempo e endereços em tempo real.</h2>
+    </div>
+    <img id="imagem-1" src="Assets/image 2.png" class="rounded float-end img-fluid" alt="...">
+          </div>
+
+          <div id="div-2" class="d-flex wd-3 justify-content-center">
+            <div class="col-md-5 p-3 mt-6 bg-body rounded">
+              <form class="form-floating mb-3">
+                <input type="text" class="form-control bg-light" id="floatingInputValue"
+                  placeholder="Insira seu primeiro nome">
+                <label for="floatingInputValue">Primeiro Nome:</label>
+              </form>
+
+              <form class="form-floating mb-3">
+                <input type="email" class="form-control bg-light" id="floatingInputValue" placeholder="name@example.com"
+                  value="test@example.com">
+                <label for="floatingInputValue">E-mail:</label>
+              </form>
+
+              <form class="form-floating mb-3">
+                <input type="text" class="form-control bg-light" id="cep" placeholder="Insira o CEP">
+                <label for="cep">Digite o CEP:</label>
+              </form>
+
+              <div class="row g-2 mb-5">
+                <div class="col-md">
+                  <form class="form-floating">
+                    <input type="text" class="form-control bg-light" id="long" placeholder="Longitude">
+                    <label for="long">Longitude:</label>
+                  </form>
+                </div>
+                <div class="col-md">
+                  <form class="form-floating">
+                    <input type="text" class="form-control bg-light" id="lat" placeholder="Latitude">
+                    <label for="lat">Latitude:</label>
+                  </form>
+                </div>
+              </div>
+              <button onclick="getAddressByCep(); getWeatherForecast()" id="btn" type="button"
+                class="btn btn-primary">Acessar</button>
+            </div>
+          </div>
+
+          <div class="d-flex" id="div-5">
+            <h2 id="txt-5" class="justify-content-start  fw-bold">Resultado da busca por CEP :</h2>
+            <img id="imagem2" src="Assets/image .png" class="" alt="...">
+          </div>
+
+          <div class="d-flex flex-column align-items-center">
+            <div id="div-3" class="bg-primary p-3 w-50 p-3 ">
+              <div id="div-3s" class="container d-flex justify-content-center">
+                <p class="mb-0">Logradouro/nome </p>
+                <p class="mb-0">Bairro/Distrito</p>
+                <p id="cidade" class="mb-0">Localidade/UF </p>
+              </div>
+            </div>
+
+            <div id="div-4" class="d-flex bg-primary p-3 wd-1 bg-white w-50 p-3 ">
+              <div id="div-4s" class="container d-flex justify-content-center">
+                <p id="rua" class="mb-0 float-end">Justino Cobra</p>
+                <p id="bairro" class="mb-0 float-end">Vila Ema</p>
+                <p id="cidade" class="mb-0 float-end">SP</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex" id="div-6">
+            <h2 id="txt-6" class="fw-bold">Previsão do tempo na região :</h2>
+    <img id="imagem3" src="Assets/image 3.png" class="" alt="...">
+          </div>
+
+          <div class="d-flex flex-column align-items-center">
+            <div id="div-7" class="d-flex bg-primary p-3 wd-1 bg-white w-50 p-3">
+              <div id="forecast" class="container d-flex justify-content-center">Previsão
+                do tempo de acordo com a aregião:
+              </div>
+            </div>
+          </div>
+
+          <footer id="foooter" class="d-flex bg-primary p-3 mt-5">
+            <div class="container">
+              <p class="mb-0 float-end">Termos de Uso | Política de Privacidade</p>
+            </div>
+          </footer>
+
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
